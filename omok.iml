@@ -14,23 +14,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:4.3.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:4.3.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.4.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.4.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-context:4.3.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-core:4.3.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:4.3.0.BUILD-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.16" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.4.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.4.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.4.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-validation:1.4.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.2" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.16" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:4.3.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:4.3.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.4.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.4.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:1.4.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-core:4.3.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:8.0.32" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-el:8.0.32" level="project" />
@@ -39,6 +35,10 @@
     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator:5.2.4.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.2" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:4.3.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:4.3.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-context:4.3.0.BUILD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:4.3.0.BUILD-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.16" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.16" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.5" level="project" />
