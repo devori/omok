@@ -9,33 +9,45 @@
         window.onload = function(){
             cc.game.onStart = function(){
                 //load resources
-                cc.LoaderScene.preload(["./images/go_board.png"], function () {
-                    var MyScene = cc.Scene.extend({
-                        onEnter:function () {
-                            this._super();
-                            var size = cc.director.getWinSize();
-                            var board = cc.Sprite.create("./images/go_board.png");
-                            board.setPosition(size.width / 2, size.height / 2);
-                            board.setScale(0.4);
-                            this.addChild(board, 0);
+                var MyScene = cc.Scene.extend({
+                    onEnter:function () {
+                        this._super();
+                        var size = cc.director.getWinSize();
+                        var board = cc.Sprite.create("./images/go_board.png");
+                        board.setPosition(size.width / 2, size.height / 2);
+                        board.setScale(0.4);
+                        this.addChild(board, 0);
 
-                            var white = cc.Sprite.create("./images/white_stone.png");
-                            white.setPosition(size.width / 2, size.height / 2);
-                            white.setScale(0.08);
-                            this.addChild(white, 0);
+                        var scene = this;
+                        var listener = cc.EventListener.create({
+                            event : cc.EventListener.CUSTOM,
+                            eventName: "onStone",
+                            callback: function (evt) {
 
-                            var black = cc.Sprite.create("./images/black_stone.png");
-                            black.setPosition(size.width / 2 + 40, size.height / 2 + 40);
-                            black.setScale(0.08);
-                            this.addChild(black, 0);
+                                var sprite;
+                                var userData = evt.getUserData();
+                                var type = userData.type, x = userData.x, y = userData.y;
+                                if (type === "BLACK") {
+                                    sprite = cc.Sprite.create("./images/black_stone.png");
+                                } else {
+                                    sprite = cc.Sprite.create("./images/white_stone.png");
+                                }
 
-//                            var label = cc.LabelTTF.create("Hello World", "Arial", 40);
-//                            label.setPosition(size.width / 2, size.height / 2);
-//                            this.addChild(label, 1);
-                        }
-                    });
-                    cc.director.runScene(new MyScene());
-                }, this);
+                                var hCenter = size.width / 2;
+                                var vCenter = size.height / 2;
+                                var unitWidth = size.width/19.2;
+                                var unitHeight = size.height/19.2;
+
+                                sprite.setPosition(hCenter - ((9 - x) * unitWidth), vCenter - ((9 - y) * unitHeight));
+                                sprite.setScale(0.08);
+                                scene.addChild(sprite, 0);
+                            }
+                        });
+                        cc.eventManager.addListener(listener, 1);
+                    }
+                });
+
+                cc.director.runScene(new MyScene());
             };
             cc.game.run("gameCanvas");
         };
