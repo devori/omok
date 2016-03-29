@@ -4,14 +4,78 @@
     <script type="text/javascript" src="./lib/cocos2d-js-v3.10/cocos2d-js-v3.10.js" charset="UTF-8"></script>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="800"></canvas>
-    <script type="text/javascript">
-        window.onload = function(){
-            cc.game.onStart = function(){
-                //load resources
+<canvas id="gameCanvas" width="800" height="800"></canvas>
+<script type="text/javascript">
+    window.onload = function () {
+        cc.game.onStart = function () {
+            //load resources
+            cc.LoaderScene.preload(["./images/go_board.png"], function () {
+
                 var MyScene = cc.Scene.extend({
-                    onEnter:function () {
+                    init: function () {
+
+                    },
+                    onEnter: function () {
                         this._super();
+
+                        var layer = new ReadyLayer();
+                        this.addChild(layer, 0)
+                        layer.init();
+                    }
+                });
+
+                var myScene = new MyScene();
+
+
+                var ReadyLayer = cc.Layer.extend({
+                    sprite: null,
+                    tag: "readyLayer",
+                    ctor: function () {
+                        this._super();
+                        var size = cc.winSize;
+                        this.sprite = new cc.Sprite("./images/basic_img02.png");
+                        this.sprite.attr({
+                            x: size.width / 2,
+                            y: size.height / 2
+                        });
+                        this.addChild(this.sprite, 0);
+                        this.sprite.tag = 'TouchTarget';
+
+                        //Creating Event Listener Object
+                        var listener = cc.EventListener.create({
+                            event: cc.EventListener.MOUSE,
+                            swallowTouches: true,
+                            ismousedown: false,
+                            onMouseDown: function (event) {
+                                var target = event.getCurrentTarget();
+                                var locationInNode = target.convertToNodeSpace(event.getLocation());
+                                var s = target.getContentSize();
+                                var rect = cc.rect(0, 0, s.width, s.height);
+
+                                //Check the click area
+                                if (cc.rectContainsPoint(rect, locationInNode)) {
+                                    myScene.removeChildByTag("readyLayer");
+
+                                    cc.eventManager.removeAllListeners();
+
+                                    var gameLayer = new GameLayer();
+
+                                    myScene.addChild(gameLayer, 0, "gameLayer");
+                                    gameLayer.init();
+                                    this.ismousedown = true;
+                                }
+                                return false;
+                            }
+                        });
+
+                        //Added Event Listener To Sprite
+                        cc.eventManager.addListener(listener, this.sprite);
+                        return true;
+                    }
+                });
+
+                var GameLayer = cc.Layer.extend({
+                    init: function () {
                         var size = cc.director.getWinSize();
                         var board = cc.Sprite.create("./images/go_board.png");
                         board.setPosition(size.width / 2, size.height / 2);
@@ -47,10 +111,12 @@
                     }
                 });
 
-                cc.director.runScene(new MyScene());
-            };
-            cc.game.run("gameCanvas");
+
+                cc.director.runScene(myScene);
+            }, this);
         };
-    </script>
+        cc.game.run("gameCanvas");
+    };
+</script>
 </body>
 </html>
