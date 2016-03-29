@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <script type="text/javascript" src="./lib/cocos2d-js-v3.10/cocos2d-js-v3.10.js" charset="UTF-8"></script>
 </head>
 <body>
-Hello World!
+    <canvas id="gameCanvas" width="800" height="800"></canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            cc.game.onStart = function(){
+                //load resources
+                cc.LoaderScene.preload(["./images/go_board.png"], function () {
+                    var MyScene = cc.Scene.extend({
+                        onEnter:function () {
+                            this._super();
+                            var size = cc.director.getWinSize();
+                            var board = cc.Sprite.create("./images/go_board.png");
+                            board.setPosition(size.width / 2, size.height / 2);
+                            board.setScale(0.4);
+                            this.addChild(board, 0);
+
+                            var white = cc.Sprite.create("./images/white_stone.png");
+                            white.setPosition(size.width / 2, size.height / 2);
+                            white.setScale(0.08);
+                            this.addChild(white, 0);
+
+                            var black = cc.Sprite.create("./images/black_stone.png");
+                            black.setPosition(size.width / 2 + 40, size.height / 2 + 40);
+                            black.setScale(0.08);
+                            this.addChild(black, 0);
+
+//                            var label = cc.LabelTTF.create("Hello World", "Arial", 40);
+//                            label.setPosition(size.width / 2, size.height / 2);
+//                            this.addChild(label, 1);
+                        }
+                    });
+                    cc.director.runScene(new MyScene());
+                }, this);
+            };
+            cc.game.run("gameCanvas");
+        };
+    </script>
 </body>
 </html>
