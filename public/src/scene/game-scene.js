@@ -1,7 +1,22 @@
 var GameScene = (function () {
 
     var GameLayer = cc.Layer.extend({
+        clients: [],
         setStone: function (x, y, stone) {
+
+            if (OmokCore.check()) {
+                return;
+            }
+
+            var i;
+            if (!OmokCore.push(x, y, stone)) {
+                return false;
+            }
+
+            this.clients[1].push(x, y, stone);
+            this.clients[0].push(x, y, stone);
+
+
             var size = cc.director.getWinSize();
             var hCenter = size.width / 2;
             var vCenter = size.height / 2;
@@ -17,13 +32,35 @@ var GameScene = (function () {
             sprite.setPosition(hCenter + ((x-9) * unitWidth), vCenter + ((y-9) * unitHeight));
             sprite.setScale(0.08);
             this.addChild(sprite, 0);
+
+            if (OmokCore.check()) {
+                setTimeout(function () {
+                    alert("win : " + (stone === 'b' ? "Black" : "White"));
+                }, 10);
+                return true;
+            }
+
+            var self = this;
+            if (stone === 'b') {
+                var next = this.clients[1].getNext();
+                if (next) {
+                    setTimeout(function () {
+                        self.setStone(next.i, next.j, next.stone);
+                    }, 100);
+                }
+            }
+
+            return true;
         },
-        init: function () {
+        init: function (clientA, clientB) {
             var size = cc.director.getWinSize();
             var board = cc.Sprite.create("./images/go_board.png");
             board.setPosition(size.width / 2, size.height / 2);
             board.setScale(0.4);
             this.addChild(board, 0);
+
+            this.clients = [clientA, clientB];
+            OmokCore.start();
 
             var layer = this;
             var listener = cc.EventListener.create({
@@ -44,37 +81,24 @@ var GameScene = (function () {
                     if (Math.abs(x) > 9 || Math.abs(y) > 9) {
                         return;
                     }
-                    if (OmokCore.check()) {
-                        return;
-                    }
 
                     var stone = OmokCore.getTurn();
-                    if (OmokCore.push(x+9, y+9, stone)) {
-                        layer.setStone(x + 9, y + 9, stone);
-                        if (OmokCore.check()) {
-                            setTimeout(function () {
-                                alert("win : " + (stone === 'b' ? "Black" : "White"));Jeep8walrus
-
-                            }, 100);
-                        }
-                    }
+                    layer.setStone(x+9, y+9, stone);
                 }
             });
             cc.eventManager.addListener(listener, board);
-
-            OmokCore.start();
         }
     });
     
     return cc.Scene.extend({
-        layer: {},
+        layer: null,
         init: function () {
         },
         onEnter: function () {
             this._super();
-            var layer = new GameLayer();
-            this.addChild(layer, 0)
-            layer.init();
+            this.layer = new GameLayer();
+            this.addChild(this.layer, 0)
+            this.layer.init({push: function () {}, getNext: function () {}}, new ClientAI());
         }
     });
 })();

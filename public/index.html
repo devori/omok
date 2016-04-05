@@ -13,9 +13,10 @@
                 frameRate:60, // 60 frames per second
                 tag:"gameCanvas", // id of the canvas element
                 engineDir:"./lib/cocos2d-js-v3.10/", // path to your cocos2d installation
-                jsList:["./src/omok.js"
+                jsList:["./src/omok-core.js"
                         , "./src/scene/ready-scene.js"
-                        , "./src/scene/game-scene.js"] // path to the main game file
+                        , "./src/scene/game-scene.js"
+                        , "./src/client/ai-client.js"] // path to the main game file
             };
 
             var s = document.createElement("script");

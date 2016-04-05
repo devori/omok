@@ -35,9 +35,9 @@ var OmokCore = (function () {
             return true;
         },
         pop: function () {
-            var step = this._seqStack.pop();
-            _board[step.i][step.j] = '';
-            _turn = step.stone;
+                var step = this._seqStack.pop();
+                _board[step.i][step.j] = '';
+                _turn = step.stone;
         },
         check: function (length) {
             length = length || 5;
@@ -66,13 +66,13 @@ var OmokCore = (function () {
 
                         ti = i - d[0];
                         tj = j - d[1];
-                        if (ti < 0 || ti >= _SIZE || tj < 0 || tj >= _SIZE || stone === _board[ti][tj]) {
+                        if (ti >= 0 && ti < _SIZE && tj >= 0 && tj < _SIZE && stone === _board[ti][tj]) {
                             win = false;
                         }
 
                         ti = i+(d[0]*length);
                         tj = j+(d[1]*length);
-                        if (ti < 0 || ti >= _SIZE || tj < 0 || tj >= _SIZE || stone === _board[ti][tj]) {
+                        if (ti >= 0 && ti < _SIZE && tj >= 0 && tj < _SIZE && stone === _board[ti][tj]) {
                             win = false;
                         }
                         if (win) {
