@@ -36,7 +36,7 @@ var GameScene = (function () {
             if (OmokCore.check()) {
                 setTimeout(function () {
                     alert("win : " + (stone === 'b' ? "Black" : "White"));
-                }, 10);
+                }, 100);
                 return true;
             }
 
