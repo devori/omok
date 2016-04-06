@@ -6,7 +6,7 @@ var ReadyScene = (function () {
         ctor: function () {
             this._super();
             var size = cc.winSize;
-            this.sprite = new cc.Sprite("./images/basic_img02.png");
+            this.sprite = new cc.Sprite("./images/switch.png");
             this.sprite.attr({
                 x: size.width / 2,
                 y: size.height / 2
