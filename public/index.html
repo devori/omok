@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="./lib/cocos2d-js-v3.10/cocos2d-js-v3.10.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var c = {
+                menuType:"canvas",
+                COCOS2D_DEBUG:2, // full debug mode
+                box2d:false, // no physics in this game
+                chipmunk: false, // no chipmunk engine
+                showFPS:false, // let's show the FPS meter
+                frameRate:60, // 60 frames per second
+                tag:"gameCanvas", // id of the canvas element
+                engineDir:"./lib/cocos2d-js-v3.10/", // path to your cocos2d installation
+                jsList:["./src/omok-core.js"
+                        , "./src/scene/ready-scene.js"
+                        , "./src/scene/game-scene.js"
+                        , "./src/client/ai-client.js"] // path to the main game file
+            };
+
+            var s = document.createElement("script");
+            s.src = "./src/app.js";
+            document.body.appendChild(s);
+            s.c = c;
+            s.id = "cocos2d-html5";
+            document.ccConfig = c;
+        };
+    </script>
+</head>
+<body>
+<canvas id="gameCanvas" width="800" height="800"></canvas>
+</body>
+</html>
