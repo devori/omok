@@ -12,8 +12,9 @@ var ClientAI = function (size) {
 };
 
 ClientAI.prototype.countPoint = function (i, j, turn) {
-    var d, direction = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
-    var i, j, k, l, cnt, point = 0;
+//    var d, direction = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
+    var d, direction = [[1, 0], [1, 1], [0, 1], [-1, 1]];
+    var k, l, cnt, point = 0;
     if (this.board[i][j] !== '') {
         return -10000000;
     }
@@ -26,18 +27,25 @@ ClientAI.prototype.countPoint = function (i, j, turn) {
         d = direction[k];
         cnt = 0;
         for (l = 1; l < limit; l++) {
-            ti = i+(d[0]*l);
-            tj = j+(d[1]*l);
-            if (ti < 0 || ti >= this.SIZE || tj < 0 || tj >= this.SIZE) {
-                break;
-            }
-            if (this.board[ti][tj] !== '') {
-                point += limit - l;
+            for( m = 0; m < 2; m++){
+                if( m % 2 == 0 ){
+                    ti = i+(d[0]*l);
+                    tj = j+(d[1]*l);
+                } else {
+                    ti = i-(d[0]*l);
+                    tj = j-(d[1]*l);
+                }
+                if (ti < 0 || ti >= this.SIZE || tj < 0 || tj >= this.SIZE) {
+                    break;
+                }
+                if (this.board[ti][tj] != '') {
+                    point += limit - l;
+                }
             }
         }
     }
 
-    point += this.breakFour(i, j, turn, this.SIZE, this.board) ? 100000 : 0;
+    point += this.calSeqPoint(i, j, turn, this.SIZE, this.board);
 
     return point;
 }
@@ -120,10 +128,9 @@ ClientAI.prototype.canWin = function (i, j, stone) {
     return result;
 }
 
-ClientAI.prototype.breakFour = function (i, j, turn){
+ClientAI.prototype.calSeqPoint = function (i, j, turn){
     var beforeStone;
-    var direction = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
-    var result = false;
+    var direction = [[1, 0], [1, 1], [0, 1], [-1, 1]];
 
     if(turn === 'b'){
         beforeStone = 'w';
@@ -131,22 +138,49 @@ ClientAI.prototype.breakFour = function (i, j, turn){
         beforeStone = 'b';
     }
 
+    var length = 4;
+    var result = 0;
+    var d, l, k, li, lj, seqCnt;
     for (k = 0; k< direction.length; k++){
         d = direction[k];
 
-        var found = true;
-        for (l = 1; l <= 4; l++){
+        seqCnt = 0;
+        for (l = 1; l <= length; l++){
             li = i+(d[0]*l);
             lj = j+(d[1]*l);
             if(li < 0 || li >= this.SIZE || lj < 0 || lj >= this.SIZE || beforeStone !== this.board[li][lj]){
-                found = false;
                 break;
             }
+            seqCnt++;
         }
 
-        if (found) {
-            return true;
+        d[0] *= -1;
+        d[1] *= -1;
+        for (l = 1; l <= length; l++){
+            li = i+(d[0]*l);
+            lj = j+(d[1]*l);
+            if(li < 0 || li >= this.SIZE || lj < 0 || lj >= this.SIZE || beforeStone !== this.board[li][lj]){
+                break;
+            }
+            seqCnt++;
+        }
+
+        switch (seqCnt) {
+            case 1:
+                result += 10;
+                break;
+            case 2:
+                result += 100;
+                break;
+            case 3:
+                result += 1000;
+                break;
+            case 4:
+                result += 10000;
+                break;
+            default:
+                break;
         }
     }
-    return false;
+    return result;
 }
